@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/score_0"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="321dp" />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="86dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#CDAA57FF"
+        android:gravity="center"
+        android:text="@string/start"
+        android:textColor="#FFF"
+        tools:ignore="MissingConstraints,TextContrastCheck"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="381dp" />
+
+
+</LinearLayout>
