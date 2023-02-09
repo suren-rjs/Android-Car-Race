@@ -12,6 +12,7 @@ import kotlin.math.abs
 class GameView(var c: Context, var gameTask: GameTask) : View(c) {
     private var myPoint: Paint? = null
     private var speed = 1
+    private var life = 2
     private var time = 0
     private var score = 0
     private var myCarPosition = 0
@@ -22,6 +23,16 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
 
     init {
         myPoint = Paint()
+    }
+
+    private fun reset(){
+        life = 2
+        speed = 1
+        time = 0
+        score = 0
+        myCarPosition = 0
+        viewWidth = 0
+        viewHeight = 0
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "DrawAllocation")
@@ -70,13 +81,14 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
 
                 if (otherCars[i]["lane"] as Int == myCarPosition) {
                     if (carY > viewHeight - 2 - carHeight && carY < viewHeight - 2) {
-                        gameTask.closeGame(score)
-                        speed = 1
-                        time = 0
-                        score = 0
-                        myCarPosition = 0
-                        viewWidth = 0
-                        viewHeight = 0
+                        if (life == 1) {
+                            gameTask.closeGame(score)
+                            reset()
+                        } else {
+                            otherCars.removeAt(i)
+                            myCarPosition = 0
+                            life--
+                        }
                     }
                 }
                 if (carY > viewHeight + carHeight) {
@@ -91,8 +103,9 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
         }
         myPoint!!.color = Color.WHITE
         myPoint!!.textSize = 40f
-        canvas.drawText("Score : $score", 80f, 80f, myPoint!!)
-        canvas.drawText("Speed : $speed", 80f, 40f, myPoint!!)
+        canvas.drawText("Life : $life", viewWidth - 180f, 40f, myPoint!!)
+        canvas.drawText("Speed : $speed", 80f, 120f, myPoint!!)
+        canvas.drawText("Score : $score", 80f, 40f, myPoint!!)
         invalidate()
     }
 
