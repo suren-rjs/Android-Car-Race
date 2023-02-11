@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), GameTask {
 
     @SuppressLint("SetTextI18n")
     override fun closeGame(mScore: Int) {
-        score.text = "Score : $mScore"
+        score.text = "Previous Score : $mScore"
         rootLayout.removeView(mGameView)
         score.visibility = View.VISIBLE
         startBtn.visibility = View.VISIBLE
