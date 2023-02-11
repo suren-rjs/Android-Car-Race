@@ -16,6 +16,7 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
     private var time = 0
     private var score = 0
     private var myCarPosition = 0
+    private var laneCount = 3
     var viewWidth = 0
     var viewHeight = 0
 
@@ -25,7 +26,7 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
         myPoint = Paint()
     }
 
-    private fun reset(){
+    private fun reset() {
         life = 2
         speed = 1
         time = 0
@@ -43,7 +44,7 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
 
         if (time % 700 < 10 + speed) {
             val map = HashMap<String, Any>()
-            map["lane"] = (0..2).random()
+            map["lane"] = (0 until laneCount).random()
             map["startTime"] = time
             otherCars.add(map)
         }
@@ -56,9 +57,9 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
         val d = resources.getDrawable(R.drawable.blue_car, null)
 
         d.setBounds(
-            myCarPosition * viewWidth / 3 + viewWidth / 15 + 25,
+            myCarPosition * viewWidth / laneCount + viewWidth / 15 + 25,
             viewHeight - 2 - carHeight,
-            myCarPosition * viewWidth / 3 + viewWidth / 15 + carWidth - 25,
+            myCarPosition * viewWidth / laneCount + viewWidth / 15 + carWidth - 25,
             viewHeight - 2
         )
 
@@ -70,7 +71,7 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
 
         for (i in otherCars.indices) {
             try {
-                val carX = otherCars[i]["lane"] as Int * viewWidth / 3 + viewWidth / 15
+                val carX = otherCars[i]["lane"] as Int * viewWidth / laneCount + viewWidth / 15
                 val carY = time - otherCars[i]["startTime"] as Int
                 val d2 = resources.getDrawable(R.drawable.red_car, null)
 
@@ -115,7 +116,7 @@ class GameView(var c: Context, var gameTask: GameTask) : View(c) {
                 val x1 = event.x
                 if (x1 < viewWidth / 2 && myCarPosition > 0) {
                     myCarPosition--
-                } else if (x1 > viewWidth / 2 && myCarPosition < 2) {
+                } else if (x1 > viewWidth / 2 && myCarPosition < laneCount-1) {
                     myCarPosition++
                 }
                 invalidate()
